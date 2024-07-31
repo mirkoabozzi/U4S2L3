@@ -50,6 +50,7 @@ public class Main {
         Predicate<Product> priceGreaterThanOneHundred = product -> product.getPrice() > 100;
         Predicate<Product> productCategoryBooks = product -> product.getCategory().equals("books");
         Predicate<Product> productCategoryBaby = product -> product.getCategory().equals("baby");
+        Predicate<Product> productCategoryBoys = product -> product.getCategory().equals("boys");
 
 
         List<Product> listaEs1 = lista1.stream().filter(productCategoryBooks.and(priceGreaterThanOneHundred)).toList();
@@ -64,5 +65,16 @@ public class Main {
         List<Order> orderListEs2 = orderList.stream().filter(order -> order.getProducts().stream().anyMatch(productCategoryBaby)).toList();
 
         System.out.println(orderListEs2);
+
+        List<Product> listaEs3 = lista1.stream().filter(productCategoryBoys).toList();
+
+        listaEs3.forEach(product -> {
+            double newPrice = product.getPrice() * 0.90;
+            product.setPrice(newPrice);
+        });
+
+
+        System.out.println(listaEs3);
+
     }
 }
