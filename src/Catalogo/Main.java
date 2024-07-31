@@ -19,6 +19,7 @@ public class Main {
         Product product7 = new Product("dopobarba", "boys", 3.00);
 
         Customer cliente1 = new Customer("mirko", 1);
+        Customer cliente2 = new Customer("skywalker", 2);
 
         List<Product> lista1 = new ArrayList<>();
         lista1.add(product1);
@@ -29,14 +30,39 @@ public class Main {
         lista1.add(product6);
         lista1.add(product7);
 
+        List<Product> lista2 = new ArrayList<>();
+        lista2.add(product2);
+        lista2.add(product2);
+
+        List<Product> lista3 = new ArrayList<>();
+        lista3.add(product3);
+        lista3.add(product4);
+
+        List<Product> lista4 = new ArrayList<>();
+        lista3.add(product4);
+        lista3.add(product5);
+
         Order order1 = new Order("confermato", today, lista1, cliente1);
+        Order order2 = new Order("confermato", today, lista2, cliente2);
+        Order order3 = new Order("confermato", today, lista3, cliente2);
+        Order order4 = new Order("confermato", today, lista4, cliente2);
 
         Predicate<Product> priceGreaterThanOneHundred = product -> product.getPrice() > 100;
         Predicate<Product> productCategoryBooks = product -> product.getCategory().equals("books");
+        Predicate<Product> productCategoryBaby = product -> product.getCategory().equals("baby");
 
 
         List<Product> listaEs1 = lista1.stream().filter(productCategoryBooks.and(priceGreaterThanOneHundred)).toList();
         System.out.println(listaEs1);
 
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(order1);
+        orderList.add(order2);
+        orderList.add(order3);
+        orderList.add(order4);
+
+        List<Order> orderListEs2 = orderList.stream().filter(order -> order.getProducts().stream().anyMatch(productCategoryBaby)).toList();
+
+        System.out.println(orderListEs2);
     }
 }
