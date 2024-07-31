@@ -20,6 +20,7 @@ public class Main {
 
         Customer cliente1 = new Customer("mirko", 1);
         Customer cliente2 = new Customer("skywalker", 2);
+        Customer cliente3 = new Customer("darth vader", 2);
 
         List<Product> lista1 = new ArrayList<>();
         lista1.add(product1);
@@ -32,7 +33,7 @@ public class Main {
 
         List<Product> lista2 = new ArrayList<>();
         lista2.add(product2);
-        lista2.add(product2);
+        lista2.add(product3);
 
         List<Product> lista3 = new ArrayList<>();
         lista3.add(product3);
@@ -44,8 +45,8 @@ public class Main {
 
         Order order1 = new Order("confermato", today, lista1, cliente1);
         Order order2 = new Order("confermato", today, lista2, cliente2);
-        Order order3 = new Order("confermato", today, lista3, cliente2);
-        Order order4 = new Order("confermato", today, lista4, cliente2);
+        Order order3 = new Order("confermato", today.minusMonths(2), lista3, cliente2);
+        Order order4 = new Order("confermato", today.minusMonths(1), lista4, cliente3);
 
         Predicate<Product> priceGreaterThanOneHundred = product -> product.getPrice() > 100;
         Predicate<Product> productCategoryBooks = product -> product.getCategory().equals("books");
@@ -54,8 +55,8 @@ public class Main {
 
 
         List<Product> listaEs1 = lista1.stream().filter(productCategoryBooks.and(priceGreaterThanOneHundred)).toList();
-        System.out.println(listaEs1);
-
+//        System.out.println(listaEs1);
+        listaEs1.forEach(System.out::println);
         List<Order> orderList = new ArrayList<>();
         orderList.add(order1);
         orderList.add(order2);
@@ -64,7 +65,8 @@ public class Main {
 
         List<Order> orderListEs2 = orderList.stream().filter(order -> order.getProducts().stream().anyMatch(productCategoryBaby)).toList();
 
-        System.out.println(orderListEs2);
+//        System.out.println(orderListEs2);
+        orderListEs2.forEach(System.out::println);
 
         List<Product> listaEs3 = lista1.stream().filter(productCategoryBoys).toList();
 
@@ -73,8 +75,13 @@ public class Main {
             product.setPrice(newPrice);
         });
 
+//        System.out.println(listaEs3);
+        listaEs3.forEach(System.out::println);
 
-        System.out.println(listaEs3);
+        List<Product> listaEs4 = orderList.stream().filter(order -> order.getCustomer().getTier() == 2 && order.getOrderDate().isBefore(LocalDate.parse("2024-07-31")) && order.getOrderDate().isAfter(LocalDate.parse("2024-05-01"))).flatMap(order -> order.getProducts().stream()).toList();
+        listaEs4.forEach(System.out::println);
+
+//        System.out.println(listaEs4);
 
     }
 }
